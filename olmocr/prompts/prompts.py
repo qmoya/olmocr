@@ -101,11 +101,14 @@ def openai_response_format_schema() -> dict:
 def build_finetuning_prompt(base_text: str) -> str:
     return (
         f"Below is the image of one page of a document, as well as some raw textual content that was previously extracted for it. "
+        f"This is likely one page out of several in the document, so be sure to preserve any sentences that come from the previous page, or continue onto the next page, exactly as they are."
+        f"The document is an etymological Ancient Greek dictionary. The extracted textual content will contain errors, especially for the Greek."
+        f"Do not rely only on that textual content, and try to carefully decypher Greek words."
+        f"The dictionary uses a triangle to indicate cross-references. Indicate those cross-references with an XML tag, <cross-reference/>."
         f"Just return the plain text representation of this document as if you were reading it naturally.\n"
         f"Do not hallucinate.\n"
         f"RAW_TEXT_START\n{base_text}\nRAW_TEXT_END"
     )
-
 
 # Extracts the anchor text component from an existing prompt string
 def extract_raw_text(prompt: str) -> str:
